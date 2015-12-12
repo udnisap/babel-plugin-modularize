@@ -54,3 +54,4 @@ var CashInOutController = $.inherit(cinco_mvc_Controller, {
         }
     }
 }, {});
+module.exports = CashInOutController;
