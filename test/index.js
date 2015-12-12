@@ -18,7 +18,7 @@ describe("", () => {
 
     it(`should ${caseName.split("-").join(" ")}`, () => {
       const actual = babel.transformFileSync(actualFile, {
-        plugins: [plugin]
+        plugins: [plugin(babel)]
       }).code;
       const expected = fs.readFileSync(expectedFile).toString();
 
