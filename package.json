@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-modularize",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Generate a modularized javascript code from a global variable based javascript code",
   "repository": "udnisap/babel-plugin-modularize",
   "author": "Pasindu Perera <perera.pasindu@gmail.com>",
