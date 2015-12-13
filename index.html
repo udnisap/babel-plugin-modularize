@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Babel-plugin-modularize by udnisap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Babel-plugin-modularize</h1>
+      <h2 class="project-tagline">Generate a modularized javascript code from a global variable based javascript code</h2>
+      <a href="https://github.com/udnisap/babel-plugin-modularize" class="btn">View on GitHub</a>
+      <a href="https://github.com/udnisap/babel-plugin-modularize/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/udnisap/babel-plugin-modularize/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="babel-plugin-modularize" class="anchor" href="#babel-plugin-modularize" aria-hidden="true"><span class="octicon octicon-link"></span></a>babel-plugin-modularize</h1>
+
+<p><a href="https://npmjs.org/package/babel-plugin-modularize"><img src="https://badge.fury.io/js/babel-plugin-modularize.svg" alt="NPM version"></a> <a href="https://travis-ci.org/udnisap/babel-plugin-modularize"><img src="https://travis-ci.org/udnisap/babel-plugin-modularize.svg?branch=master" alt="Build Status"></a> <a href="https://david-dm.org/udnisap/babel-plugin-modularize"><img src="https://david-dm.org/udnisap/babel-plugin-modularize.svg?theme=shields.io" alt="Dependency Status"></a> <a href="https://coveralls.io/r/udnisap/babel-plugin-modularize"><img src="https://coveralls.io/repos/udnisap/babel-plugin-modularize/badge.svg" alt="Coverage percentage"></a></p>
+
+<blockquote>
+</blockquote>
+
+<p>Generate a modularized javascript code from a global variable based javascript code</p>
+
+<h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<p><strong>In</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> SomeClass <span class="pl-k">=</span> <span class="pl-smi">$</span>.<span class="pl-en">inherit</span>(SomeParent, {
+  <span class="pl-en">test1</span>(){
+    <span class="pl-smi">staticReference1</span>.<span class="pl-c1">test</span>(); <span class="pl-c">//static reference --&gt; will be a require()</span>
+    <span class="pl-k">var</span> dynamic1 <span class="pl-k">=</span> <span class="pl-c1">33</span>;     <span class="pl-c">//dynamic reference  --&gt; will remain as it is</span>
+
+    <span class="pl-k">var</span> <span class="pl-en">s</span> <span class="pl-k">=</span> <span class="pl-k">function</span>(){
+      <span class="pl-smi">staticRef</span>.<span class="pl-c1">name</span>;  <span class="pl-c">//works inside contexts too</span>
+      dynamic1 <span class="pl-k">=</span> <span class="pl-c1">4</span>;     <span class="pl-c">// this is not considered even though it is static to this scope</span>
+    };
+  }
+},{
+  <span class="pl-en">test2</span>(){
+      <span class="pl-smi">staticReference2</span>.<span class="pl-c1">test</span>(); <span class="pl-c">//static reference</span>
+      <span class="pl-k">var</span> dynamic2 <span class="pl-k">=</span> <span class="pl-c1">33</span>;     <span class="pl-c">//dynamic reference</span>
+  }
+});</pre></div>
+
+<p><strong>Out</strong></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-s"><span class="pl-pds">"</span>use strict<span class="pl-pds">"</span></span>;
+
+<span class="pl-k">var</span> $ <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>$<span class="pl-pds">"</span></span>);
+
+<span class="pl-k">var</span> SomeParent <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>SomeParent<span class="pl-pds">"</span></span>);
+
+<span class="pl-k">var</span> staticReference1 <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>staticReference1<span class="pl-pds">"</span></span>);
+
+<span class="pl-k">var</span> staticRef <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>staticRef<span class="pl-pds">"</span></span>);
+
+<span class="pl-k">var</span> staticReference2 <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>staticReference2<span class="pl-pds">"</span></span>);
+
+<span class="pl-k">var</span> SomeClass <span class="pl-k">=</span> <span class="pl-smi">$</span>.<span class="pl-en">inherit</span>(SomeParent, {
+  <span class="pl-en">test1</span><span class="pl-k">:</span> <span class="pl-k">function</span> <span class="pl-en">test1</span>() {
+    <span class="pl-smi">staticReference1</span>.<span class="pl-c1">test</span>(); <span class="pl-c">//static reference --&gt; will be a require()</span>
+    <span class="pl-k">var</span> dynamic1 <span class="pl-k">=</span> <span class="pl-c1">33</span>; <span class="pl-c">//dynamic reference  --&gt; will remain as it is</span>
+
+    <span class="pl-k">var</span> <span class="pl-en">s</span> <span class="pl-k">=</span> <span class="pl-k">function</span> <span class="pl-en">s</span>() {
+      <span class="pl-smi">staticRef</span>.<span class="pl-c1">name</span>; <span class="pl-c">//works inside contexts too</span>
+      dynamic1 <span class="pl-k">=</span> <span class="pl-c1">4</span>; <span class="pl-c">// this is not considered even though it is static to this scope</span>
+    };
+  }
+}, {
+  <span class="pl-en">test2</span><span class="pl-k">:</span> <span class="pl-k">function</span> <span class="pl-en">test2</span>() {
+    <span class="pl-smi">staticReference2</span>.<span class="pl-c1">test</span>(); <span class="pl-c">//static reference</span>
+    <span class="pl-k">var</span> dynamic2 <span class="pl-k">=</span> <span class="pl-c1">33</span>; <span class="pl-c">//dynamic reference</span>
+  }
+});
+<span class="pl-smi">module</span>.<span class="pl-smi">exports</span> <span class="pl-k">=</span> SomeClass;
+</pre></div>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<div class="highlight highlight-source-shell"><pre>$ npm install babel-plugin-modularize</pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="via-babelrc-recommended" class="anchor" href="#via-babelrc-recommended" aria-hidden="true"><span class="octicon octicon-link"></span></a>Via <code>.babelrc</code> (Recommended)</h3>
+
+<p><strong>.babelrc</strong></p>
+
+<div class="highlight highlight-source-json"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>plugins<span class="pl-pds">"</span></span>: [<span class="pl-s"><span class="pl-pds">"</span>modularize<span class="pl-pds">"</span></span>]
+}</pre></div>
+
+<h3>
+<a id="via-cli" class="anchor" href="#via-cli" aria-hidden="true"><span class="octicon octicon-link"></span></a>Via CLI</h3>
+
+<div class="highlight highlight-source-shell"><pre>$ babel --plugins modularize script.js</pre></div>
+
+<h3>
+<a id="via-node-api" class="anchor" href="#via-node-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>Via Node API</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">"</span>babel-core<span class="pl-pds">"</span></span>).<span class="pl-en">transform</span>(<span class="pl-s"><span class="pl-pds">"</span>code<span class="pl-pds">"</span></span>, {
+  plugins<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>modularize<span class="pl-pds">"</span></span>]
+});</pre></div>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p>Apache-2.0 © <a href="http://udnisap.js.org">Pasindu Perera</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/udnisap/babel-plugin-modularize">Babel-plugin-modularize</a> is maintained by <a href="https://github.com/udnisap">udnisap</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
