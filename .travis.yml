@@ -4,3 +4,5 @@ node_js:
   - "iojs"
   - v4
   - v5
+
+before_install: npm install -g babel-cli mocha
