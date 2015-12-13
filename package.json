@@ -1,9 +1,10 @@
 {
-  "version": "0.0.0",
-  "description": "",
-  "repository": "udnisap/babel-plugin-cinco",
+  "name": "babel-plugin-modularize",
+  "version": "0.0.1",
+  "description": "Generate a modularized javascript code from a global variable based javascript code",
+  "repository": "udnisap/babel-plugin-modularize",
   "author": "Pasindu Perera <perera.pasindu@gmail.com>",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "devDependencies": {
     "babel-core": "^6.3.17",
     "babel-preset-es2015": "^6.3.13",
@@ -11,12 +12,10 @@
     "mocha": "^2.2.5"
   },
   "scripts": {
+    "prepublish": "babel src/index.js > dist/index.js",
     "test": "mocha --compilers js:babel-core/register"
   },
   "keywords": [
     "babel-plugin"
-  ],
-  "dependencies": {
-    "babel-helper-plugin-test-runner": "^6.3.13"
-  }
+  ]
 }

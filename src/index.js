@@ -22,7 +22,7 @@ export default function ({types: t, template}) {
         path.insertAfter(buildExport({
           PACKAGE: t.identifier(className)
         }));
-        
+
         //path.insertAfter(buildClass({
         //  CLASSNAME : t.identifier(className),
         //  PARENT : t.identifier(parent),
