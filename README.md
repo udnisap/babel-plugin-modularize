@@ -5,6 +5,11 @@
 
 Generate a modularized javascript code from a global variable based javascript code
 
+> Warning!!
+> 
+> This is an experimental addon and should not be used in a build process. Main intention is to modularize the code in command line so that the legacy code can be convereted to common js modules. 
+
+ 
 ## Example
 
 **In**
