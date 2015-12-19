@@ -111,3 +111,6 @@ Apache-2.0 © [Pasindu Perera](http://udnisap.js.org)
 [daviddm-url]: https://david-dm.org/udnisap/babel-plugin-modularize
 [coveralls-image]: https://coveralls.io/repos/udnisap/babel-plugin-modularize/badge.svg
 [coveralls-url]: https://coveralls.io/r/udnisap/babel-plugin-modularize
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/udnisap/babel-plugin-modularize/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
